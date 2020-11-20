@@ -124,6 +124,20 @@ CREATE TABLE JOB(
   JOB_TITLE	VARCHAR(20) NOT NULL
   );
   
+-- Populating JOB
+INSERT INTO `JOB` (`JOB_CODE`, `JOB_TITLE`, `JOB_DESC`) VALUES
+(1, 'CEO', 'Chief Executive Officer'),
+(2, 'COO', 'Chief Operations Officer'),
+(3, 'Head Stewardess', 'Manages all stewards on the train'),
+(4, 'Head Mechanic', 'Manages all of the mechanics in the station'),
+(5, 'Station Manager', 'Manages all staff in a station'),
+(6, 'Train Manager', 'Manages all staff in a train')
+(7, 'Stewardess', 'Collect ticket stubs and accomodate passengers on trains.'),
+(8, 'Cafe Attendant', 'Manages the cafe car and serves food.'),
+(9, 'Mechanic', 'Fixes engines and other components of the train at the station.'),
+(10, 'Conductor', 'Drives and directs the train.'),
+(11, 'Teller', 'Sells tickets at the station.');
+  
 CREATE TABLE MEHCANIC(
   FOREIGN KEY(EMP_ID) REFERENCES EMPLOYE(EMP_ID)
   CERT_DATE	VARCHAR(20) NOT NULL
