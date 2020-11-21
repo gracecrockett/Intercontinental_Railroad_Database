@@ -166,7 +166,7 @@ CREATE TABLE CAR_ASSGN(
   
   
 /*-- Populating EMPLOYEE
-INSERT INTO `EMPLOYEE` (`EMP_ID`, `EMP_FNAME`, `EMP_LNAME`, `EMP_HIREDATE`, `JOB_CODE`, `REPORTS_TO`) VALUES
+INSERT INTO `EMPLOYEE` (`EMP_ID`, `EMP_FNAME`, `EMP_LNAME`, `EMP_HIRE_DATE`, `JOB_CODE`, `REPORTS_TO`) VALUES
 (0001, 'Shea', 'Manser', '12/25/2016', 1, null), -- CEO
 (0010, 'Hesther', 'Collecott', '12/27/2013', 2, 0001), -- COO
 (0011, 'Crystie', 'Dowsey', '6/21/2006', 5, 0010), -- Station Manager 1
@@ -189,15 +189,36 @@ INSERT INTO `EMPLOYEE` (`EMP_ID`, `EMP_FNAME`, `EMP_LNAME`, `EMP_HIREDATE`, `JOB
 (0202, 'Rowan', 'Farnworth', '9/23/2002', 7, 0002),
 (0220, 'Sascha', 'Hallowes', '7/21/2002', 8, 1111), -- Cafe Attendants
 (0222, 'Darrel', 'Chiverstone', '7/10/2019', 8, 0002),
-(2000, 'Teodoor', 'Pottle', '4/25/2007', 5, 0010), --Station Manager 3
+(2000, 'Teodoor', 'Pottle', '4/25/2007', 5, 0010), -- Station Manager 3
 (2002, 'Piggy', 'Cawte', '12/14/2019', 11, 2000), -- Teller
-(2020, 'Hale', 'Earengey', '6/4/2008', 4, 2000), -- Head Mechanic 3
+(2020, 'Kanye', 'West', '6/4/2008', 4, 2000), -- Head Mechanic 3
 (2022, 'Cloe', 'Muddiman', '9/1/2013', 9, 2020), -- Mechanics (3)
 (2200, 'Camilla', 'Pitcher', '12/26/2009', 9, 2020),
 (2202, 'Vail', 'Cawt', '12/4/2000', 9, 2020),
 (2220, 'Bonnibelle', 'Bellam', '9/14/2020', 10, 0110), -- Conductors
-(2222, 'Dwain', 'Siviter', '12/20/2017', 10, 0101));
- -- I'll remove the comments later bc we don't really need that, it's just for us
+(2222, 'Dwain', 'Siviter', '12/20/2017', 10, 0101),
+(0003, 'Nanette', 'Guille', '11/20/2015', 5, 0010), -- Station Manager 4
+(0030, 'Diandra', 'Newsome', '3/1/2005', 5, 0010), -- Station Manager 5
+(0033, 'Eduardo', 'Waliszek', '6/5/2015', 4, 0003), -- Head Mechanics
+(0300, 'Nyssa', 'Chucks', '8/12/2014', 4, 0030),
+(0303, 'Che', 'Peyes', '5/5/2005', 11, 0003), -- Tellers
+(0330, 'Dal', 'Boon', '6/16/2015', 11, 0030),
+(0333, 'Abram', 'Simonian', '1/9/2006', 9, 0033), -- Mechanics
+(3000, 'Wendall', 'Satterthwaite', '3/30/2017', 9, 0033),
+(3003, 'Curtice', 'Reinisch', '4/20/2001', 9, 0300),
+(3030, 'Blake', 'Le Count', '3/13/2020', 9, 0300),
+(3033, 'Gaspard', 'Holbarrow', '7/5/2004', 6, 0010), -- Train Manager 3
+(3300, 'Harlin', 'Cornelissen', '1/3/2002', 6, 0010), -- Train Manager 4
+(3303, 'Susan', 'Lanphere', '4/19/2018', 3, 3033), -- Head Steward 3
+(3330, 'Theodora', 'MacNair', '12/31/2000', 3, 3300), -- Head Steward 4
+(3333, 'Grete', 'Mallabon', '8/13/2016', 7, 3303), -- Stewards
+(0004, 'Maxwell', 'Heenan', '4/1/2015', 7, 3330),
+(0040, 'Zsazsa', 'Easman', '9/13/2004', 7, 3303),
+(0044, 'Zonnya', 'Symcoxe', '4/13/2011', 7, 3330),
+(0400, 'Eleen', 'Tetther', '11/11/2011', 8, 3303), -- Cafe Attendants
+(0404, 'Jack', 'Devonside', '2/2/2002', 8, 3330),
+(0440, 'Joe', 'Biden', '4/4/2004', 10, 3033), -- Conductors
+(0444, 'Donald', 'Trump', '8/8/2008', 10, 3300);
   
 -- Populating JOB
 INSERT INTO `JOB` (`JOB_CODE`, `JOB_TITLE`, `JOB_DESC`) VALUES(
@@ -214,16 +235,21 @@ INSERT INTO `JOB` (`JOB_CODE`, `JOB_TITLE`, `JOB_DESC`) VALUES(
 (11, 'Teller', 'Sells tickets at the station.'));
   
 -- Populating MECHANIC
-INSERT INTO `MECHANIC` (`EMP_ID`, `CERT_DATE`, `CERT_EXP`) VALUES(
+INSERT INTO `MECHANIC` (`EMP_ID`, `CERT_DATE`, `CERT_EXP`) VALUES
 (1001, '3/4/2019', '3/4/2024'),
 (1010, '12/5/2015', '12/5/2020'),
 (1011, '7/6/2016', '7/6/2021'),
 (1100, '7/6/2016', '7/6/2021'),
 (2022, '5/5/2017', '5/5/2022'),
 (2200, '8/5/2020', '8/5/2025'),
-(2202, '1/5/2018', '1/5/2023'));
+(2202, '1/5/2018', '1/5/2023'),
+(0333, '9/12/2016', '9/12/2021'),
+(3000, '11/15/2020', '11/15/2025'),
+(3003, '2/20/2018', '2/20/2023'),
+(3030, '6/4/2019', '6/3/2024');
 
--- Populating CONDUCTOR
-INSERT INTO `CONDUCTOR` (`EMP_ID`, `CERT_DATE`, `CERT_EXP`) VALUES(
+INSERT INTO `CONDUCTOR` (`EMP_ID`, `CERT_DATE`, `CERT_EXP`) VALUES
 (2220, '1/8/2020', '1/8/2025'),
-(2222, '9/12/2019', '9/12/2024'));*/
+(2222, '9/12/2019', '9/12/2024'),
+(0440, '12/15/2017', '12/15/2022'),
+(0444, '7/4/2018', '7/4/2023');/*
