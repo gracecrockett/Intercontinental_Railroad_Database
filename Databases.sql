@@ -418,3 +418,11 @@ INSERT INTO `PASSENGER` (`PASS_ID`, `PASS_NAME`, `PASS_LNAME`, `PASS_STREET`, `P
 (128, 'Matteo', 'Slyne', '82 Macpherson Pass', 'Henderson', 'NV', 19897, 'United States'),
 (129, 'Avril', 'Kupke', '9 Badeau Street', 'Inglewood', 'CA', 80271, 'United States'),
 (130, 'Truda', 'Rickson', '024 Crowley Street', 'Waco', 'TX', 66455, 'United States');
+
+INSERT INTO ‘ENGINE’ (‘ENG_NUM’, ‘ENG_MODEL’, ‘ENG_DESC’) VALUES
+(001, AC6000CW, ‘6000 hp’),
+(002, AC4460CW, ‘6000 hp’),
+(003, CW46AH, ‘4600 hp’),
+(004, AC6000CW, ‘6000 hp’),
+(005, CW60AC, ’5100 hp’),
+(006, AC4460CW, ‘6000 hp’);
