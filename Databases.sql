@@ -1,9 +1,9 @@
 /* Brysen Allen, Joe Davidson, Grace Crockett, David Pesin
    DB-Project
 */
-CREATE TABLE PASSENGER(
+CREATE TABLE IF NOT EXISTS PASSENGER(
 	PASS_ID       Numeric(7,0),
-	PASS_NAME     VARCHAR(20) NOT NULL,
+	PASS_FNAME     VARCHAR(20) NOT NULL,
 	PASS_LNAME    VARCHAR(20) NOT NULL,
 	PASS_STREET   VARCHAR(20) NOT NULL,
 	PASS_CITY     VARCHAR(20) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE PASSENGER(
 	PRIMARY KEY(PASS_ID)
 );
 
-CREATE TABLE INVOICE(
+CREATE TABLE IF NOT EXISTS INVOICE(
 	INV_ID		NUMERIC(7,0),
 	PRICE		NUMERIC(5,2) NOT NULL,
 	CONF_CODE	VARCHAR(20) NOT NULL,
@@ -21,14 +21,14 @@ CREATE TABLE INVOICE(
 	PRIMARY KEY(INV_ID));
 	/*FOREIGN KEY(PASS_ID) REFERNCES PASSENGER(PASS_ID)*/
   
-CREATE TABLE TRAIN(
+CREATE TABLE IF NOT EXISTS TRAIN(
 	TRAIN_NUM 	NUMERIC(2,0) NOT NULL,
 	CONDUCTOR_ID	NUMERIC(7,0) NOT NULL,
 	NUM_SEATS	NUMERIC(7,0) NOT NULL,
 	PRIMARY KEY(TRAIN_NUM)
 );
 
-CREATE TABLE STATION(
+CREATE TABLE IF NOT EXISTS STATION(
 	STAT_NUM      NUMERIC(3,0) NOT NULL,
 	STAT_STREET   VARCHAR(20) NOT NULL,
 	STAT_CITY     VARCHAR(20) NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE STATION(
 	PRIMARY KEY(STAT_NUM)
 );
 
-CREATE TABLE ROUTE(
+CREATE TABLE IF NOT EXISTS ROUTE(
 	ROUTE_NUM   	NUMERIC(3,0) NOT NULL,
 	ORIGIN		NUMERIC(3,0),
 	DESTINATION	NUMERIC(3,0),
@@ -47,17 +47,17 @@ CREATE TABLE ROUTE(
 	FOREIGN KEY(DESTINATION) REFERENCES STATION(STAT_NUM)*/
 
   
-CREATE TABLE ROUTE_ASSGN(
+CREATE TABLE IF NOT EXISTS ROUTE_ASSGN(
 	R_ASSGN		NUMERIC(7,0) NOT NULL,
 	ROUTE_NUM 	NUMERIC(3,0),
-	TRUE_DEPT	DATE,
-	TRUE_ARR	DATE,
-	EST_DEPT	DATE NOT NULL,
-	EST_ARRIVAL	DATE NOT NULL,
+	TRUE_DEPT	DATETIME,
+	TRUE_ARR	DATETIME,
+	EST_DEPT	DATETIME NOT NULL,
+	EST_ARRIVAL	DATETIME NOT NULL,
 	PRIMARY KEY(R_ASSGN));
 	/*FOREIGN KEY(ROUTE_NUM) REFERENCES ROUTE(ROUT_NUM)*/
 
-CREATE TABLE STOPS(
+CREATE TABLE IF NOT EXISTS STOPS(
 	ROUTE_NUM 	NUMERIC(3,0),
 	STOP_NUM	NUMERIC(3,0) NOT NULL,
 	STAT_NUM	NUMERIC(3,0),
@@ -65,35 +65,37 @@ CREATE TABLE STOPS(
   	/*FOREIGN KEY(ROUTE_NUM) REFERENCES ROUTE(ROUTE_NUM),
   	FOREIGN KEY(STAT_NUM) REFERENCES STATION(STAT_NUM)*/
 
-CREATE TABLE TICKET(
+CREATE TABLE IF NOT EXISTS TICKET(
  	TICKET_ID     	NUMERIC(7,0) NOT NULL,
 	INV_ID		NUMERIC(7,0) ,
 	R_ASSGN		NUMERIC(7,0) ,
 	SEAT_NUM      	VARCHAR(6) NOT NULL,
+	ORIGIN		NUMERIC(3,0),
+	DESTINATION	NUMERIC(3,0),	
 	PRIMARY KEY(TICKET_ID));
 	/*FOREIGN KEY(INV_ID) REFERENCES INVOICE(INV_ID),
 	FOREIGN KEY(R_ASSGN) REFERENCES ROUTE_ASSGN(R_ASSGN)*/
 
 
-CREATE TABLE JOB(
+CREATE TABLE IF NOT EXISTS JOB(
 	JOB_CODE 	NUMERIC(2,0) NOT NULL,
 	JOB_DESC	VARCHAR(20) NOT NULL,
-	JOB_TITLE	VARCHAR(20) NOT NULL,
+	JOB_TITLE	VARCHAR(150) NOT NULL,
 	PRIMARY KEY(JOB_CODE)
 );
   
-CREATE TABLE EMPLOYEE(
+CREATE TABLE IF NOT EXISTS EMPLOYEE(
 	EMP_ID 		NUMERIC(4,0) NOT NULL PRIMARY KEY,
 	EMP_FNAME	VARCHAR(20) NOT NULL,
 	EMP_LNAME	VARCHAR(20) NOT NULL,
 	EMP_HIREDATE	DATE NOT NULL,
 	JOB_CODE	NUMERIC(2,0),
-	REPORTS_T0	NUMERIC(7,0));
-	/*FOREIGN KEY(JOB_CODE) REFERENCES JOB(JOB_CODE)
-	FOREIGN KEY(REPORTS_TO) REFERENCES EMPLOYEE(EMP_ID)*/
+	REPORTS_TO	NUMERIC(4,0));
+	#FOREIGN KEY(JOB_CODE) REFERENCES JOB(JOB_CODE)
+	#FOREIGN KEY(REPORTS_TO) REFERENCES EMPLOYEE(EMP_ID)
 
 
-CREATE TABLE MEHCANIC(
+CREATE TABLE IF NOT EXISTS MECHANIC(
 	EMP_ID		NUMERIC(4,0),
 	CERT_DATE	VARCHAR(20) NOT NULL,
 	CERT_EXP	VARCHAR(20) NOT NULL,
@@ -101,7 +103,7 @@ CREATE TABLE MEHCANIC(
 	/*FOREIGN KEY(EMP_ID) REFERENCES EMPLOYE(EMP_ID)*/
 
 
-CREATE TABLE CONDUCTOR(
+CREATE TABLE IF NOT EXISTS CONDUCTOR(
 	EMP_ID		NUMERIC(4,0),
 	CERT_DATE	DATE NOT NULL,
 	CERT_EXP	DATE NOT NULL,
@@ -110,7 +112,7 @@ CREATE TABLE CONDUCTOR(
 
  
 
-CREATE TABLE STATION_ASSGN(
+CREATE TABLE IF NOT EXISTS STATION_ASSGN(
 	STAT_ASSGN	NUMERIC(7,0) NOT NULL,
 	EMP_ID		NUMERIC(4,0) ,
  	STAT_NUM	NUMERIC(3,0) ,
@@ -120,7 +122,7 @@ CREATE TABLE STATION_ASSGN(
 	FOREIGN KEY(STAT_NUM) REFERENCES STATION(STAT_NUM)*/
   
 
-CREATE TABLE TRAIN_ASSGN(
+CREATE TABLE IF NOT EXISTS TRAIN_ASSGN(
 	T_ASSGN 	NUMERIC(7,0) NOT NULL,
 	EMP_ID		NUMERIC(4,0),
 	TRAIN_NUM	NUMERIC(4,0),
@@ -131,14 +133,14 @@ CREATE TABLE TRAIN_ASSGN(
 	FOREIGN KEY(TRAIN_NUM) REFERENCES TRAIN(TRAIN_NUM)*/
   
   
-CREATE TABLE ENGINE(
+CREATE TABLE IF NOT EXISTS ENGINE(
   	ENG_NUM		NUMERIC(7,0) NOT NULL,
 	ENG_MODEL	VARCHAR(20) NOT NULL,
 	ENG_DESC	VARCHAR(50) NOT NULL,
 	PRIMARY KEY(ENG_NUM)
 );
   
-CREATE TABLE ENGINE_ASSGN(
+CREATE TABLE IF NOT EXISTS ENGINE_ASSGN(
 	E_ASSGN 	NUMERIC(7,0),
 	ENG_NUM		NUMERIC(7,0),
 	TRAIN_NUM	NUMERIC(4,0),
@@ -147,14 +149,15 @@ CREATE TABLE ENGINE_ASSGN(
 	PRIMARY KEY(E_ASSGN));
 	/*FOREIGN KEY(ENG_NUM) REFERENCES ENGINE(ENG_NUM),
 	FOREIGN KEY(TRAIN_NUM) REFERENCES TRAIN(TRAIN_NUM)*/
-CREATE TABLE CAR(
+
+CREATE TABLE IF NOT EXISTS CAR(
   	CAR_NUM 	NUMERIC(7,0),
   	CAR_DESC	VARCHAR(20) NOT NULL,
   	CAR_CAPACITY	NUMERIC(7,0) NOT NULL,
   	PRIMARY KEY(CAR_NUM)
   );
   
-CREATE TABLE CAR_ASSGN(
+CREATE TABLE IF NOT EXISTS CAR_ASSGN(
 	C_ASSGN 	NUMERIC(7,0) NOT NULL,
 	CAR_NUM		NUMERIC(7,0),
 	TRAIN_NUM	NUMERIC(4,0),
@@ -164,95 +167,97 @@ CREATE TABLE CAR_ASSGN(
 	);
 	
   
-  
-/*-- Populating EMPLOYEE
-INSERT INTO `EMPLOYEE` (`EMP_ID`, `EMP_FNAME`, `EMP_LNAME`, `EMP_HIRE_DATE`, `JOB_CODE`, `REPORTS_TO`) VALUES
-(0001, 'Shea', 'Manser', '12/25/2016', 1, null), -- CEO
-(0010, 'Hesther', 'Collecott', '12/27/2013', 2, 0001), -- COO
-(0011, 'Crystie', 'Dowsey', '6/21/2006', 5, 0010), -- Station Manager 1
-(0100, 'Hulda', 'Geany', '11/2/2007', 5, 0010), -- Station Manager 2
-(0101, 'Gustaf', 'Wraith', '5/29/2012', 6, 0010), -- Train Manager 1
-(0110, 'Anya', 'Rusted', '2/22/2017', 6, 0010), -- Train Manager 2
-(0111, 'Skippy', 'Dodshun', '10/22/2005', 4, 0011), -- Head Mechanic 1
-(1000, 'Maia', 'Yuranovev', '7/26/2016', 4, 0100), -- Head Mechanic 2
-(1001, 'Pat', 'Britian', '2/10/2016', 9, 0111), --Mechanics
-(1010, 'Philipa', 'Bolesworth', '9/2/2002', 9, 0111),
-(1011, 'Ilyse', 'Krimmer', '4/19/2004', 9, 1000),
-(1100, 'Saraann', 'Hetterich', '10/5/2003', 9, 1000),
-(1101, 'Traci', 'Marciskewski', '8/4/2011', 11, 0011), -- Tellers
-(1110, 'Cobbie', 'Canfer', '4/22/2000', 11, 0100),
-(1111, 'Sloan', 'Quixley', '1/8/2001', 3, 0101), -- Head Steward 1
-(0002, 'Thornton', 'Pyke', '10/28/2004', 3, 0110), -- Head Steward 2
-(0020, 'Amity', 'Aidler', '6/5/2003', 7, 1111), -- Stewardesses 
-(0022, 'Karoly', 'Rippin', '9/26/2020', 7, 1111),
-(0200, 'Alecia', 'Filipowicz', '10/25/2020', 7, 0002),
-(0202, 'Rowan', 'Farnworth', '9/23/2002', 7, 0002),
-(0220, 'Sascha', 'Hallowes', '7/21/2002', 8, 1111), -- Cafe Attendants
-(0222, 'Darrel', 'Chiverstone', '7/10/2019', 8, 0002),
-(2000, 'Teodoor', 'Pottle', '4/25/2007', 5, 0010), -- Station Manager 3
-(2002, 'Piggy', 'Cawte', '12/14/2019', 11, 2000), -- Teller
-(2020, 'Kanye', 'West', '6/4/2008', 4, 2000), -- Head Mechanic 3
-(2022, 'Cloe', 'Muddiman', '9/1/2013', 9, 2020), -- Mechanics (3)
-(2200, 'Camilla', 'Pitcher', '12/26/2009', 9, 2020),
-(2202, 'Vail', 'Cawt', '12/4/2000', 9, 2020),
-(2220, 'Bonnibelle', 'Bellam', '9/14/2020', 10, 0110), -- Conductors
-(2222, 'Dwain', 'Siviter', '12/20/2017', 10, 0101),
-(0003, 'Nanette', 'Guille', '11/20/2015', 5, 0010), -- Station Manager 4
-(0030, 'Diandra', 'Newsome', '3/1/2005', 5, 0010), -- Station Manager 5
-(0033, 'Eduardo', 'Waliszek', '6/5/2015', 4, 0003), -- Head Mechanics
-(0300, 'Nyssa', 'Chucks', '8/12/2014', 4, 0030),
-(0303, 'Che', 'Peyes', '5/5/2005', 11, 0003), -- Tellers
-(0330, 'Dal', 'Boon', '6/16/2015', 11, 0030),
-(0333, 'Abram', 'Simonian', '1/9/2006', 9, 0033), -- Mechanics
-(3000, 'Wendall', 'Satterthwaite', '3/30/2017', 9, 0033),
-(3003, 'Curtice', 'Reinisch', '4/20/2001', 9, 0300),
-(3030, 'Blake', 'Le Count', '3/13/2020', 9, 0300),
-(3033, 'Gaspard', 'Holbarrow', '7/5/2004', 6, 0010), -- Train Manager 3
-(3300, 'Harlin', 'Cornelissen', '1/3/2002', 6, 0010), -- Train Manager 4
-(3303, 'Susan', 'Lanphere', '4/19/2018', 3, 3033), -- Head Steward 3
-(3330, 'Theodora', 'MacNair', '12/31/2000', 3, 3300), -- Head Steward 4
-(3333, 'Grete', 'Mallabon', '8/13/2016', 7, 3303), -- Stewards
-(0004, 'Maxwell', 'Heenan', '4/1/2015', 7, 3330),
-(0040, 'Zsazsa', 'Easman', '9/13/2004', 7, 3303),
-(0044, 'Zonnya', 'Symcoxe', '4/13/2011', 7, 3330),
-(0400, 'Eleen', 'Tetther', '11/11/2011', 8, 3303), -- Cafe Attendants
-(0404, 'Jack', 'Devonside', '2/2/2002', 8, 3330),
-(0440, 'Joe', 'Biden', '4/4/2004', 10, 3033), -- Conductors
-(0444, 'Donald', 'Trump', '8/8/2008', 10, 3300);
-  
--- Populating JOB
-INSERT INTO `JOB` (`JOB_CODE`, `JOB_TITLE`, `JOB_DESC`) VALUES(
-(1, 'CEO', 'Chief Executive Officer'),
-(2, 'COO', 'Chief Operations Officer'),
-(3, 'Head Stewardess', 'Manages all stewards on the train'),
-(4, 'Head Mechanic', 'Manages all of the mechanics in the station'),
-(5, 'Station Manager', 'Manages all staff in a station'),
-(6, 'Train Manager', 'Manages all staff in a train')
-(7, 'Stewardess', 'Collect ticket stubs and accomodate passengers on trains.'),
-(8, 'Cafe Attendant', 'Manages the cafe car and serves food.'),
-(9, 'Mechanic', 'Fixes engines and other components of the train at the station.'),
-(10, 'Conductor', 'Drives and directs the train.'),
-(11, 'Teller', 'Sells tickets at the station.'));
-  
+ -- Populating jobs
+INSERT INTO `JOB` (`JOB_CODE`, `JOB_TITLE`, `JOB_DESC`) 
+	VALUES
+	(1, 'CEO', 'Chief Executive Officer'),
+	(2, 'COO', 'Chief Operations Officer'),
+	(3, 'Head Stewardess', 'Manages all stewards on the train'),
+	(4, 'Head Mechanic', 'Manages all of the mechanics in the station'),
+	(5, 'Station Manager', 'Manages all staff in a station'),
+	(6, 'Train Manager', 'Manages all staff in a train'),
+	(7, 'Stewardess', 'Collect ticket stubs and accomodate passengers on trains.'),
+	(8, 'Cafe Attendant', 'Manages the cafe car and serves food.'),
+	(9, 'Mechanic', 'Fixes engines and other components of the train at the station.'),
+	(10, 'Conductor', 'Drives and directs the train.'),
+	(11, 'Teller', 'Sells tickets at the station.');
+
+-- Populating EMPLOYEE
+INSERT INTO `EMPLOYEE` (`EMP_ID`, `EMP_FNAME`, `EMP_LNAME`, `EMP_HIREDATE`, `JOB_CODE`, `REPORTS_TO`) VALUES
+(0001, 'Shea', 'Manser', '2016-12-25', 1, null), -- CEO
+(0010, 'Hesther', 'Collecott', '2013-12-27', 2, 0001), -- COO
+(0011, 'Crystie', 'Dowsey', '2006-06-21', 5, 0010), -- Station Manager 1
+(0100, 'Hulda', 'Geany', '2007-11-2', 5, 0010), -- Station Manager 2
+(0101, 'Gustaf', 'Wraith', '2012-05-29', 6, 0010), -- Train Manager 1
+(0110, 'Anya', 'Rusted', '2017-02-22', 6, 0010), -- Train Manager 2
+(0111, 'Skippy', 'Dodshun', '2005-10-22', 4, 0011), -- Head Mechanic 1
+(1000, 'Maia', 'Yuranovev', '2016-07-26', 4, 0100), -- Head Mechanic 2
+(1001, 'Pat', 'Britian', '2016-02-10', 9, 0111), -- Mechanics
+(1010, 'Philipa', 'Bolesworth', '2002-09-02', 9, 0111),
+(1011, 'Ilyse', 'Krimmer', '2004-04-19', 9, 1000),
+(1100, 'Saraann', 'Hetterich', '2003-10-05', 9, 1000),
+(1101, 'Traci', 'Marciskewski', '2011-08-04', 11, 0011), -- Tellers
+(1110, 'Cobbie', 'Canfer', '2000-04-22', 11, 0100),
+(1111, 'Sloan', 'Quixley', '2001-01-08', 3, 0101), -- Head Steward 1
+(0002, 'Thornton', 'Pyke', '2004-10-28', 3, 0110), -- Head Steward 2
+(0020, 'Amity', 'Aidler', '2003-05-06', 7, 1111), -- Stewardesses 
+(0022, 'Karoly', 'Rippin', '2020-09-26', 7, 1111),
+(0200, 'Alecia', 'Filipowicz', '2020-10-25', 7, 0002),
+(0202, 'Rowan', 'Farnworth', '2002-09-23', 7, 0002),
+(0220, 'Sascha', 'Hallowes', '2002-07-21', 8, 1111), -- Cafe Attendants
+(0222, 'Darrel', 'Chiverstone', '2019-07-10', 8, 0002),
+(2000, 'Teodoor', 'Pottle', '2007-04-25', 5, 0010), -- Station Manager 3
+(2002, 'Piggy', 'Cawte', '2019-12-14', 11, 2000), -- Teller
+(2020, 'Kanye', 'West', '2008-06-04', 4, 2000), -- Head Mechanic 3
+(2022, 'Cloe', 'Muddiman', '2013-09-01', 9, 2020), -- Mechanics (3)
+(2200, 'Camilla', 'Pitcher', '2009-12-26', 9, 2020),
+(2202, 'Vail', 'Cawt', '2000-12-04', 9, 2020),
+(2220, 'Bonnibelle', 'Bellam', '2020-09-14', 10, 0110), -- Conductors
+(2222, 'Dwain', 'Siviter', '2017-12-20', 10, 0101),
+(0003, 'Nanette', 'Guille', '2015-11-20', 5, 0010), -- Station Manager 4
+(0030, 'Diandra', 'Newsome', '2005-03-01', 5, 0010), -- Station Manager 5
+(0033, 'Eduardo', 'Waliszek', '2015-06-05', 4, 0003), -- Head Mechanics
+(0300, 'Nyssa', 'Chucks', '2014-08-14', 4, 0030),
+(0303, 'Che', 'Peyes', '2005-05-05', 11, 0003), -- Tellers
+(0330, 'Dal', 'Boon', '2015-06-16', 11, 0030),
+(0333, 'Abram', 'Simonian', '2006-01-09', 9, 0033), -- Mechanics
+(3000, 'Wendall', 'Satterthwaite', '2017-03-30', 9, 0033),
+(3003, 'Curtice', 'Reinisch', '2001-04-20', 9, 0300),
+(3030, 'Blake', 'Le Count', '2020-03-13', 9, 0300),
+(3033, 'Gaspard', 'Holbarrow', '2004-07-05', 6, 0010), -- Train Manager 3
+(3300, 'Harlin', 'Cornelissen', '2002-01-03', 6, 0010), -- Train Manager 4
+(3303, 'Susan', 'Lanphere', '2018-04-19', 3, 3033), -- Head Steward 3
+(3330, 'Theodora', 'MacNair', '2000-12-31', 3, 3300), -- Head Steward 4
+(3333, 'Grete', 'Mallabon', '2016-08-13', 7, 3303), -- Stewards
+(0004, 'Maxwell', 'Heenan', '2015-04-01', 7, 3330),
+(0040, 'Zsazsa', 'Easman', '2004-09-13', 7, 3303),
+(0044, 'Zonnya', 'Symcoxe', '011-04-13', 7, 3330),
+(0400, 'Eleen', 'Tetther', '2011-11-11', 8, 3303), -- Cafe Attendants
+(0404, 'Jack', 'Devonside', '2002-02-02', 8, 3330),
+(0440, 'Joe', 'Biden', '2004-04-04', 10, 3033), -- Conductors
+(0444, 'Donald', 'Trump', '2008-08-08', 10, 3300);
+
+
 -- Populating MECHANIC
 INSERT INTO `MECHANIC` (`EMP_ID`, `CERT_DATE`, `CERT_EXP`) VALUES
-(1001, '3/4/2019', '3/4/2024'),
-(1010, '12/5/2015', '12/5/2020'),
-(1011, '7/6/2016', '7/6/2021'),
-(1100, '7/6/2016', '7/6/2021'),
-(2022, '5/5/2017', '5/5/2022'),
-(2200, '8/5/2020', '8/5/2025'),
-(2202, '1/5/2018', '1/5/2023'),
-(0333, '9/12/2016', '9/12/2021'),
-(3000, '11/15/2020', '11/15/2025'),
-(3003, '2/20/2018', '2/20/2023'),
-(3030, '6/4/2019', '6/3/2024');
+(1001, '2019-03-04', '2024-03-04'),
+(1010, '2015-12-05', '2020-12-05'),
+(1011, '2016-07-06', '2021-07-06'),
+(1100, '2016-07-06', '2021-07-06'),
+(2022, '2017-05-05', '2022-05-05'),
+(2200, '2020-08-05', '2021-08-05'),
+(2202, '2018-01-05', '2023-01-05'),
+(0333, '2016-09-12', '2021-09-12'),
+(3000, '2020-11-15', '2025-11-15'),
+(3003, '2018-02-20', '2023-02-20'),
+(3030, '2019-06-04', '2024-06-03');
+
 
 INSERT INTO `CONDUCTOR` (`EMP_ID`, `CERT_DATE`, `CERT_EXP`) VALUES
-(2220, '1/8/2020', '1/8/2025'),
-(2222, '9/12/2019', '9/12/2024'),
-(0440, '12/15/2017', '12/15/2022'),
-(0444, '7/4/2018', '7/4/2023');/*
+(2220, '2020-01-08', '2025-01-08'),
+(2222, '2019-09-12', '2024-09-12'),
+(0440, '2017-12-15', '2022-12-15'),
+(0444, '2018-07-04', '2023-07-04');
 
 INSERT INTO ‘CAR’ (‘CAR_NUM’, ‘CAR_DESC’, ‘CAR_CAPACITY’) VALUES
 (101,WAUZL54B01N482168,25),
@@ -387,7 +392,7 @@ INSERT INTO `PASSENGER` (`PASS_ID`, `PASS_NAME`, `PASS_LNAME`, `PASS_STREET`, `P
 (97, 'Sheila-kathryn', 'Warrior', '887 Grasskamp Place', 'Jovellanos', null, 43180, 'Cuba'),
 (98, 'Farra', 'Crenshaw', '73980 Sloan Hill', 'Tangzang', null, 13999, 'China'),
 (99, 'Hedwiga', 'Klink', '44339 Mendota Drive', 'Puan Selatan', null, 82889, 'Indonesia'),
-(100, 'Elora', 'Godilington', '1780 Tony Center', 'Masuda', null, 68790, 'Japan'),
+(100, 'Elora', 'Godilington', '1780 Tony Center', 'Masuda', null, 68790, 'Japan')
 (101, 'Felicio', 'Knuckles', '63 Donald Point', 'El Paso', 'TX', 75795, 'United States'),
 (102, 'Darius', 'Pittwood', '8 Northview Court', 'Flint', 'MI', 82664, 'United States'),
 (103, 'Marwin', 'Benneyworth', '8 Glacier Hill Drive', 'Pasadena', 'CA', 47151, 'United States'),
@@ -419,15 +424,21 @@ INSERT INTO `PASSENGER` (`PASS_ID`, `PASS_NAME`, `PASS_LNAME`, `PASS_STREET`, `P
 (129, 'Avril', 'Kupke', '9 Badeau Street', 'Inglewood', 'CA', 80271, 'United States'),
 (130, 'Truda', 'Rickson', '024 Crowley Street', 'Waco', 'TX', 66455, 'United States');
 
+insert into 'STATION' ('STAT_NUM', 'STAT_STREET', 'STAT_CITY', 'STAT_STATE', 'STAT_ZIP', 'STAT_COUNTRY') values 
+(101, '148 Crest Line Plaza', 'New York City', 'New York', 74091, 'United States'),
+(102, '0765 Hagan Center', 'München', 'Bayern', 16928, 'Germany'),
+(103, '52 Dottie Trail', 'Tokyo', null, 60131, 'Japan'),
+(104, '455 Fieldstone Crossing', 'London', 'England', 78256, 'United Kingdom'),
+(105, '21657 Dakota Center', 'Paris', 'Île-de-France', 42182, 'France');
+
 INSERT INTO ‘ENGINE’ (‘ENG_NUM’, ‘ENG_MODEL’, ‘ENG_DESC’) VALUES
-(001, AC6000CW, ‘6000 hp’),
-(002, AC4460CW, ‘6000 hp’),
-(003, CW46AH, ‘4600 hp’),
-(004, AC6000CW, ‘6000 hp’),
-(005, CW60AC, ’5100 hp’),
-(006, AC4460CW, ‘6000 hp’);
-		   
--- populating INVOICE
+(101, AC6000CW, ‘6000 hp’),
+(102, AC4460CW, ‘6000 hp’),
+(103, CW46AH, ‘4600 hp’),
+(104, AC6000CW, ‘6000 hp’),
+(105, CW60AC, ’5100 hp’),
+(106, AC4460CW, ‘6000 hp’);
+
 INSERT INTO `INVOICE` (`INV_ID`, `PRICE`, `CONF_CODE`, `PASS_ID`) VALUES
 (1, 2859.74, '264KUT', 1),
 (2, 1411.6, '374SHR', 2),
