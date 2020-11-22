@@ -615,3 +615,30 @@ INSERT INTO `TRAIN` (`TRAIN_NUM`, `CONDUCTOR_ID`, `NUM_SEATS`) VALUES
 -- Engines with lower HP can be used to carry less people.
 
 /* ROUTE,TRAIN,STOP,ROUTE_ASSGN,TICKET,STAT_ASSGN,TRAIN_ASSGN,ENG_ASSGN,CAR_ASSGN*/
+
+		    
+/*
+CREATE TABLE IF NOT EXISTS `employees` (
+  `employeeNumber` int(11) NOT NULL,
+  `lastName` varchar(50) NOT NULL,
+  `firstName` varchar(50) NOT NULL,
+  `extension` varchar(10) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `officeCode` varchar(10) NOT NULL,
+  `reportsTo` int(11) DEFAULT NULL,
+  `jobTitle` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- population, im not gonna copy it
+
+ALTER TABLE `employees`
+  ADD PRIMARY KEY (`employeeNumber`),
+  ADD KEY `reportsTo` (`reportsTo`),
+  ADD KEY `officeCode` (`officeCode`);
+
+ALTER TABLE `employees`
+  ADD CONSTRAINT `employees_ibfk_1` FOREIGN KEY (`reportsTo`) REFERENCES `employees` (`employeeNumber`),
+  ADD CONSTRAINT `employees_ibfk_2` FOREIGN KEY (`officeCode`) REFERENCES `offices` (`officeCode`);
+		    
+		    Example of how to make it work properly :D */
+		    
