@@ -602,19 +602,31 @@ INSERT INTO `INVOICE` (`INV_ID`, `PRICE`, `CONF_CODE`, `PASS_ID`) VALUES
 (159, 2368.92, '057SPG', 51),
 (160, 2878.93, '946APF', 107);
 		    
--- populating TRAIN
 -- Populating TRAIN
 INSERT INTO `TRAIN` (`TRAIN_NUM`, `CONDUCTOR_ID`, `NUM_SEATS`) VALUES
-(453, 2220, 300),
-(145, 2222, 300),
-(342, 0040, 200),
-(234, null, 300), -- unused train (unassigned to any route, etc.)
-(361, 0444, 300),
-(253, null, 200); -- unused train
+(453, 2220, null),
+(145, 2222, null),
+(342, 0040, null),
+(234, null, null), -- unused train (unassigned to any route, etc.)
+(361, 0444, null),
+(253, null, null); -- unused train
 -- We'll replace the NUM_SEATS when we get proper values but for now this should be enough
 -- Engines with lower HP can be used to carry less people.
+		    
+-- Populating ENGINE_ASSGN
+INSERT INTO `ENGINE_ASSGN` (`E_ASSGN`, `ENG_NUM`, `TRAIN_NUM`, `START_DATE`, `END_DATE`) VALUES
+(1, 107, 453, '2014-09-29', '2016-04-12'),
+(2, 104, 145, '2015-01-12', '2020-04-14'),
+(3, 105, 361, '2015-07-15', null),
+(4, 103, 453, '2016-06-20', null),
+(5, 107, 234, '2017-03-07', null),
+(6, 106, 342, '2018-08-12', '2019-11-05'),
+(7, 106, 253, '2019-09-05', null),
+(8, 101, 342, '2019-12-01', null),
+(9, 104, 145, '2020-6-24', null);
 
-/* ROUTE,TRAIN,STOP,ROUTE_ASSGN,TICKET,STAT_ASSGN,TRAIN_ASSGN,ENG_ASSGN,CAR_ASSGN*/
+
+/* ROUTE,STOP,ROUTE_ASSGN,TICKET,STAT_ASSGN,TRAIN_ASSGN,CAR_ASSGN*/
 
 		    
 /*
