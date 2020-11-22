@@ -432,12 +432,13 @@ insert into 'STATION' ('STAT_NUM', 'STAT_STREET', 'STAT_CITY', 'STAT_STATE', 'ST
 (105, '21657 Dakota Center', 'Paris', 'Île-de-France', 42182, 'France');
 
 INSERT INTO ‘ENGINE’ (‘ENG_NUM’, ‘ENG_MODEL’, ‘ENG_DESC’) VALUES
-(101, AC6000CW, ‘6000 hp’),
-(102, AC4460CW, ‘6000 hp’),
-(103, CW46AH, ‘4600 hp’),
-(104, AC6000CW, ‘6000 hp’),
-(105, CW60AC, ’5100 hp’),
-(106, AC4460CW, ‘6000 hp’);
+(101, AC6000CW, '6000 hp'),
+(102, AC4460CW, '6000 hp'),
+(103, CW46AH, '4600 hp'),
+(104, AC6000CW, '6000 hp'),
+(105, CW60AC, '5100 hp'),
+(106, AC4460CW, '6000 hp, chassis is corroded, needs repairs'),
+(107, CW60AC, '5100 hp, cylinders keep misfiring, needs repairs');
 
 INSERT INTO `INVOICE` (`INV_ID`, `PRICE`, `CONF_CODE`, `PASS_ID`) VALUES
 (1, 2859.74, '264KUT', 1),
@@ -600,5 +601,17 @@ INSERT INTO `INVOICE` (`INV_ID`, `PRICE`, `CONF_CODE`, `PASS_ID`) VALUES
 (158, 1756.64, '360MBR', 91),
 (159, 2368.92, '057SPG', 51),
 (160, 2878.93, '946APF', 107);
+		    
+-- populating TRAIN
+-- Populating TRAIN
+INSERT INTO `TRAIN` (`TRAIN_NUM`, `CONDUCTOR_ID`, `NUM_SEATS`) VALUES
+(453, 2220, 300),
+(145, 2222, 300),
+(342, 0040, 200),
+(234, null, 300), -- unused train (unassigned to any route, etc.)
+(361, 0444, 300),
+(253, null, 200); -- unused train
+-- We'll replace the NUM_SEATS when we get proper values but for now this should be enough
+-- Engines with lower HP can be used to carry less people.
 
 /* ROUTE,TRAIN,STOP,ROUTE_ASSGN,TICKET,STAT_ASSGN,TRAIN_ASSGN,ENG_ASSGN,CAR_ASSGN*/
