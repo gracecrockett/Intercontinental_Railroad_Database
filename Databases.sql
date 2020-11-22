@@ -508,7 +508,7 @@ INSERT INTO ‘ENGINE’ (‘ENG_NUM’, ‘ENG_MODEL’, ‘ENG_DESC’) VALUES
 (106, AC4460CW, '6000 hp, chassis is corroded, needs repairs'),
 (107, CW60AC, '5100 hp, cylinders keep misfiring, needs repairs');
 
-INSERT INTO `INVOICE` (`INV_ID`, `PRICE`, `CONF_CODE`, `PASS_ID`) VALUES
+INSERT INTO `INVOICE` (`INV_ID`, `PRICE`, `CONF_CODE`, `PASS_ID`, `P_DATE`) VALUES
 (1, 2859.74, '264KUT', 1),
 (2, 1411.6, '374SHR', 2),
 (3, 2947.63, '923PRK', 3),
