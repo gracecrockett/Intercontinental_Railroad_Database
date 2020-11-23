@@ -38,8 +38,7 @@ ALTER TABLE INVOICE -- Constraints for INVOICE
   
 CREATE TABLE IF NOT EXISTS TRAIN( -- Table structure for TRAIN
  TRAIN_NUM 	NUMERIC(3,0) NOT NULL,
- -- CONDUCTOR_ID	NUMERIC(7,0) NOT NULL,
- -- NUM_SEATS	NUMERIC(7,0) NOT NULL
+ CONDUCTOR_ID	NUMERIC(7,0) NOT NULL
 );
 ALTER TABLE TRAIN -- Indexes for TRAIN
   ADD PRIMARY KEY (TRAIN_NUM);
@@ -683,13 +682,13 @@ INSERT INTO `INVOICE` (`INV_ID`, `PRICE`, `CONF_CODE`, `PASS_ID`, `P_DATE`) VALU
 (160, 2878.93, '946APF', 107, '2020-02-28');
 		    
 -- Populating TRAIN
-INSERT INTO `TRAIN` (`TRAIN_NUM`, `CONDUCTOR_ID`, `NUM_SEATS`) VALUES
-(453, 2220, null),
-(145, 2222, null),
-(342, 0040, null),
-(234, null, null), -- unused train (unassigned to any route, etc.)
-(361, 0444, null),
-(253, null, null); -- unused train
+INSERT INTO `TRAIN` (`TRAIN_NUM`, `CONDUCTOR_ID`) VALUES
+(453, 2220),
+(145, 2222),
+(342, 0040),
+(234, null), -- unused train (unassigned to any route, etc.)
+(361, 0444),
+(253, null); -- unused train
 -- We'll replace the NUM_SEATS when we get proper values but for now this should be enough
 -- Engines with lower HP can be used to carry less people.
 		    
