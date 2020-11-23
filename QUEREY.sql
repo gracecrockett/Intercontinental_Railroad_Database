@@ -1,3 +1,8 @@
+/* 
+ * Transplanetary Railway Database Queries
+ * Brysen Allen, Joe Davidson, Grace Crockett, David Pesin
+ */
+ 
 -- All passengers FROM the United States sorted alphabetically with an invoice over $1500
 SELECT CONCAT(PASS_FNAME,' ', PASS_LNAME) AS 'Passenger', CONCAT('$', PRICE) AS 'Invoice Price'
 FROM PASSENGER
