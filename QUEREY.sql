@@ -1,11 +1,11 @@
-#All passengers FROM the United States sorted alphabetically with an invoice over $1500
+-- All passengers FROM the United States sorted alphabetically with an invoice over $1500
 SELECT CONCAT(PASS_FNAME,' ', PASS_LNAME) AS 'Passenger', CONCAT('$', PRICE) AS 'Invoice Price'
 FROM PASSENGER
 JOIN INVOICE ON PASSENGER.PASS_ID = INVOICE.PASS_ID
 WHERE PRICE > 1500 AND PASS_COUNTRY = 'United States'
 ORDER BY PASS_LNAME;
 
-#All passengers (their ID, first, and last name) going to destination 104 on date x
+-- All passengers (their ID, first, and last name) going to destination 104 on date x
 SELECT PASSENGER.PASS_ID, PASSENGER.PASS_FNAME, PASSENGER.PASS_LNAME
 FROM PASSENGER
 JOIN INVOICE ON PASSENGER.PASS_ID = INVOICE.PASS_ID
@@ -14,26 +14,26 @@ JOIN ROUTE_ASSGN ON TICKET.R_ASSGN = ROUTE_ASSGN.R_ASSGN
 WHERE TICKET.DESTINATION = 104 AND ROUTE_ASSGN.EST_DEPT = '2020-05-18 18:30:00'
 GROUP BY PASSENGER.PASS_ID;
 
-#All the employees at station 101 with last name starting with “B”
+-- All the employees at station 101 with last name starting with “B”
 SELECT EMPLOYEE.EMP_ID, EMPLOYEE.EMP_FNAME, EMPLOYEE.EMP_LNAME
 FROM EMPLOYEE
 JOIN STATION_ASSGN ON EMPLOYEE.EMP_ID = STATION_ASSGN.EMP_ID
 WHERE STAT_NUM = 101 AND EMP_LNAME LIKE 'B%'
 ORDER BY EMP_LNAME DESC;
 
-#All mechanics and their supervisors
+-- All mechanics and their supervisors
 SELECT E.EMP_FNAME AS MECHANIC_FNAME, E.EMP_LNAME AS MECHANIC_LNAME,S.EMP_FNAME AS SUPERVISOR_FNAME, S.EMP_LNAME AS SUPERVISOR_LNAME
 FROM EMPLOYEE E , EMPLOYEE S
 WHERE E.JOB_CODE = 9 AND E.REPORTS_TO=S.EMP_ID
 ORDER BY S.EMP_LNAME,E.EMP_LNAME;
 
 
-#Number of passengers that get off at stop 105
+-- Number of passengers that get off at stop 105
 SELECT COUNT(*) AS 'NUM PASSENGERS DEST STAT 105'
 FROM TICKET
 WHERE TICKET.DESTINATION = 105;
 
-#Number of passengers that bought tickets that depart between '2020-05-18' AND '2020-05-19'
+-- Number of passengers that bought tickets that depart between '2020-05-18' AND '2020-05-19'
 SELECT COUNT(*) 'TICKETS DEPARTING BETWEEN 2020-05-18 AND 2020-05-19'
 FROM PASSENGER
 JOIN INVOICE ON PASSENGER.PASS_ID = INVOICE.PASS_ID
@@ -41,20 +41,19 @@ JOIN TICKET ON INVOICE.INV_ID = TICKET.INV_ID
 JOIN ROUTE_ASSGN ON TICKET.R_ASSGN = ROUTE_ASSGN.R_ASSGN
 WHERE ROUTE_ASSGN.EST_DEPT BETWEEN '2020-05-18' AND '2020-05-19';
 
-#Number of stops on EACH ROUTE
+-- Number of stops on EACH ROUTE
 SELECT ROUTE_NUM,COUNT(*) AS 'STOPS ON ROUTE'
 FROM STOPS
 GROUP BY ROUTE_NUM;
 
-#The hire date for the conductor for a specific train
+-- The hire date for the conductor for a specific train
 SELECT EMP_HIREDATE
 FROM EMPLOYEE
 JOIN TRAIN_ASSGN ON EMPLOYEE.EMP_ID = TRAIN_ASSGN.EMP_ID
 WHERE EMPLOYEE.JOB_CODE = 10 AND TRAIN_ASSGN.TRAIN_NUM = 453;
 
 
-#10
-#Total ticket sales in the past year and total amount sold
+-- Total ticket sales in the past year and total amount sold
 SELECT CONCAT('$ ',FORMAT(SUM(PRICE),2)) AS 'Total Sales'
 FROM INVOICE;
 
@@ -67,7 +66,7 @@ JOIN PASSENGER ON INVOICE.PASS_ID = PASSENGER.PASS_ID
 GROUP BY INVOICE.INV_ID HAVING COUNT(INVOICE.INV_ID) > 1;
 
 
-#most frequent destinations - gonna need a subquery for number of times destination shows up
+-- most frequent destinations - gonna need a subquery for number of times destination shows up
 SELECT TICKET.DESTINATION AS 'MOST FREQ. DESTINATION'
 FROM ROUTE
 JOIN ROUTE_ASSGN ON ROUTE.ROUTE_NUM = ROUTE_ASSGN.ROUTE_NUM
@@ -78,7 +77,7 @@ LIMIT 1;
 
 
 
-#Top three passenger IDs with the most expensive invoices and their invoice total
+-- Top three passenger IDs with the most expensive invoices and their invoice total
 SELECT PASSENGER.PASS_ID, CONCAT('$', PRICE) AS 'HIGHEST PRICE'
 FROM PASSENGER
 JOIN INVOICE ON PASSENGER.PASS_ID = INVOICE.PASS_ID
@@ -86,29 +85,38 @@ ORDER BY PRICE DESC
 LIMIT 3;
 
 
-#The total amount of sales on a certain date
+-- The total amount of sales on a certain date
 SELECT CONCAT("$", FORMAT(SUM(PRICE),2)) AS "Total Ticket Sales"
 FROM INVOICE
 WHERE P_DATE = '2020-04-17';
 
 
-# All the employee IDs not working at a station 
+-- All the employee IDs not working at a station 
 SELECT EMPLOYEE.EMP_ID, CONCAT(EMP_FNAME, EMP_LNAME) AS "Employee", JOB_CODE
 FROM EMPLOYEE
 WHERE EMPLOYEE.EMP_ID NOT IN 
     (SELECT EMP_ID 
      FROM STATION_ASSGN);
 
-# The difference between the departure times and arrival times and the shortest route time
+-- The difference between the departure times and arrival times and the shortest route time
 SELECT  TIMEDIFF(TRUE_DEPT, EST_DEPT) AS 'Difference in Departure', 
         TIMEDIFF(TRUE_ARR, EST_ARRIVAL) AS 'Difference in Arrival',
         TIMEDIFF(TRUE_ARR, TRUE_DEPT) AS 'Length of Route'
 FROM ROUTE_ASSGN
 ORDER BY 'Length of Route' ASC;
 
-#Printing all employees stationed in Tokyo
+-- Printing all employees stationed in Tokyo
 SELECT sa.EMP_ID, e.EMP_FNAME, e.EMP_LNAME, j.JOB_TITLE
 FROM STATION_ASSGN sa 
 JOIN EMPLOYEE e ON sa.EMP_ID = e.EMP_ID
 JOIN JOB j ON e.JOB_CODE = j.JOB_CODE
 WHERE sa.STAT_NUM = 103
+
+-- Number of employees per job
+SELECT j.JOB_TITLE, COUNT(e.EMP_ID) AS 'Number of employees'
+FROM EMPLOYEE e 
+LEFT JOIN JOB j ON j.JOB_CODE = e.JOB_CODE
+GROUP BY j.JOB_CODE
+ORDER BY COUNT(e.EMP_ID)
+                          
+                
