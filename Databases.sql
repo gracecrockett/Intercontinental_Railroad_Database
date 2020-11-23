@@ -1,6 +1,12 @@
 /* 
  * Transplanetary Railway Database
  * Brysen Allen, Joe Davidson, Grace Crockett, David Pesin
+ * 
+ * This is a database that includes elements of an international train organization,
+ * its passengers and employees, and the routes and tickets that correspond to them.
+ * As these trains traverse in record speeds that defy the laws of physics, there are
+ * things common with other train organizations that does not apply to this one.
+ * We hope you enjoy exploring our creation.
  */
 CREATE TABLE IF NOT EXISTS PASSENGER( -- Table structure for PASSENGER
   PASS_ID       Numeric(7,0) NOT NULL,
